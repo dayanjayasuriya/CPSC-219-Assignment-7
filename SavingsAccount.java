@@ -8,9 +8,9 @@
 public class SavingsAccount extends BankAccount {
 
   private double annualInterestRate;
-  private final double MONTHLY_FEE = -5.0;
-  private final double MINIMUM_BALANCE = 1000.00;
-  private final double PENALTY = 1/12;
+  private final double MONTHLY_FEE = 5.0;
+  private final double MINIMUM_BALANCE = 1000.0;
+  private final double MONTHS = 12;
 
   /**
   * Default constructors
@@ -22,9 +22,8 @@ public class SavingsAccount extends BankAccount {
   class, starting balance, and an annual interest rate to be passed to it to use.
   */
   public SavingsAccount(Customer accountHolder, double startBalance, double annualInterestRate){
-    Customer newAccountHolder = new Customer(accountHolder);
-    setBalance(startBalance);
-    setAnnualInterestRate(annualInterestRate);
+    super(accountHolder, startBalance);
+    this.setAnnualInterestRate(annualInterestRate);
   }
 
   /**
@@ -38,7 +37,7 @@ public class SavingsAccount extends BankAccount {
   * Method sets the annual interest rate for the account.
   */
   public void setAnnualInterestRate(double rate){
-    annualInterestRate = rate;
+    annualInterestRate = rate / 100;
   }
 
   /**
@@ -47,8 +46,9 @@ public class SavingsAccount extends BankAccount {
   protected double getMonthlyFeesAndInterest(){
     double monthlyFeesAndInterest = 0.0;
     if (getBalance() < MINIMUM_BALANCE){
-      double penaltyRate = getAnnualInterestRate() * PENALTY;
-      monthlyFeesAndInterest = (penaltyRate * getBalance());
+      monthlyFeesAndInterest = getBalance() * (annualInterestRate/MONTHS) - MONTHLY_FEE;
+    }else{
+      monthlyFeesAndInterest = getBalance()  * (annualInterestRate/MONTHS);
     }
     return monthlyFeesAndInterest;
   }
