@@ -11,21 +11,24 @@ public class ChequingAccount extends BankAccount {
   private final double PENALTY_RATE = 0.2;
 
   /**
-  * Constructors
+  * Constructor that sets overdraft fee.
   */
-
   public ChequingAccount(double transactionFee) {
-    setOverdraftfee(transactionFee);
-  }
-  public ChequingAccount(Customer accountHolder, double startBalance,
-                          double transactionFee) {
-    setBalance(startBalance);
-    setCustomer(accountHolder);
     setOverdraftfee(transactionFee);
   }
 
   /**
-  * Getter methods
+  * Constructor that sets an account holder, starting chequing account balance,
+  * and overdraft fee.
+  */
+  public ChequingAccount(Customer accountHolder, double startBalance,
+                          double transactionFee) {
+    super(accountHolder, startBalance);
+    this.setOverdraftfee(transactionFee);
+  }
+
+  /**
+  * Getter methods for overdraft fee and threshold for overdraft to kick in.
   */
   public double getOverdraftFee() {
     return overdraftfee;
@@ -35,7 +38,7 @@ public class ChequingAccount extends BankAccount {
   }
 
   /**
-  * Setter Methods
+  * Setter Methods for overdraft fee and threshold for overdraft to kick in.
   */
   public void setOverdraftfee(double fee) {
     overdraftfee = fee;
