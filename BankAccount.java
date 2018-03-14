@@ -1,4 +1,4 @@
-import java.util.InputMismatchException;
+
 
 /** This class works as a banking account with balances that can be checked, deposited
 * into, and withdrawn from. This version is made by Dayan Jayasuriya, Nicki Lindstrom,
@@ -15,11 +15,14 @@ public abstract class BankAccount {
 
 
   /**
-  * Adding constructors to and for no entry of new BankAccount as well as
-  * a new customer and a new balance
+  * Default constructor for BankAccount.
   */
   public BankAccount() {
   }
+
+  /**
+  * Constructor for a BankAccount with customer and balance parameters.
+  */
   public BankAccount(Customer accountHolder, double startBalance) {
     setBalance(startBalance);
     setCustomer(accountHolder);
@@ -40,9 +43,17 @@ public abstract class BankAccount {
     balance = newBalance;
   }
 
+  /**
+  * Get the current customer.
+  */
+
   public Customer getCustomer() {
     return new Customer(accountHolder);
   }
+
+  /**
+  * Set a new customer as the account holder.
+  */
   public void setCustomer(Customer newCustomer) {
     accountHolder = new Customer(newCustomer);
   }
@@ -51,20 +62,12 @@ public abstract class BankAccount {
   * Make a deposit to the bank account.
   */
   public void deposit (double amount) {
-    //This try block catches an Exception caused by the user not entering an integer.
-    try {
-      //This if statement makes sure the user only deposits a positive amount of money.
-      if (amount >= 0.0) {
-        balance += amount;
-      }
-
-      else {
-        System.out.println("You cannot deposit a negative number.");
-      }
+    if (amount >= 0.0) {
+      balance += amount;
     }
 
-    catch (InputMismatchException e) {
-      System.out.println("You did not enter a number to deposit.");
+    else {
+      balance = balance;
     }
   }
 
@@ -91,12 +94,12 @@ public abstract class BankAccount {
   }
 
   /**
-  * Gets the monthly bank fees and interest
+  * Get the monthly bank fees and interest.
   */
   protected abstract double getMonthlyFeesAndInterest();
 
   /**
-  * Update bank account balance taking into account monthly bank fees and intrest.
+  * Update bank account balance taking into account monthly bank fees and interest.
   */
   public void monthEndUpdate(){
     balance += getMonthlyFeesAndInterest() ;
